@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\models;
+namespace backend\models;
 
 use Yii;
 
@@ -29,10 +29,9 @@ class OrderManagment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-          
-            [['id', 'product_id', 'user_id'], 'integer'],
+            [['product_id', 'user_id', 'updated_date'], 'required'],
+            [['product_id', 'user_id'], 'integer'],
             [['created_date', 'updated_date'], 'safe'],
-            [['id'], 'unique'],
         ];
     }
 
@@ -48,8 +47,5 @@ class OrderManagment extends \yii\db\ActiveRecord
             'created_date' => 'Created Date',
             'updated_date' => 'Updated Date',
         ];
-    }
-     public function getProduct() {
-        return $this->hasOne(ProductManagment::className(), ['product_id' => 'id']);
     }
 }
