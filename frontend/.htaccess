@@ -1,0 +1,12 @@
+RewriteEngine on
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} -f 
+
+RewriteRule .? - [S=2]
+
+# redirect to installer if the request ends with install.php
+RewriteRule /install\.php$ install.php [L]
+
+# otherwise forward it to index.php
+RewriteRule . index.php
