@@ -41,6 +41,7 @@ AppAsset::register($this);
      $menuItems[] = ['label' => 'User Managment', 'url' => ['/usermanagment']];
     $menuItems[] = ['label' => 'Category Managments', 'url' => ['/categorymanagment']];
     $menuItems[] = ['label' => 'Product Managments', 'url' => ['/productmanagment']];
+    $menuItems[] = ['label' => 'Order Managments', 'url' => ['/ordermanagment']];
      
 
 

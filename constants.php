@@ -3,7 +3,7 @@ $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVE
 
 $server = $_SERVER['SERVER_NAME'];
  define('SITE_ABS_PATH', $protocol . $server . '/'); 
-define('SITE_ABS_UPLOAD_PATH', SITE_ABS_PATH . 'uploads/');
+define('SITE_ABS_UPLOAD_PATH', SITE_ABS_PATH . '/openxcell/uploads/');
 
 define('SITE_REL_PATH', dirname(__FILE__) . '/');
 // path for cronlog
