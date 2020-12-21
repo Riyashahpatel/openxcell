@@ -7,7 +7,7 @@ $server = $_SERVER['SERVER_NAME'];
 
 define('SITE_ABS_UPLOAD_PATH', SITE_ABS_PATH . 'uploads/');
 
-define('SITE_REL_PATH', dirname(__FILE__) . '/');
+define('SITE_REL_PATH', dirname(__FILE__) . '/../');
 // path for cronlog
 
 define('UPLOAD_DIR_PATH', SITE_REL_PATH . 'uploads/');

@@ -31,7 +31,7 @@ class ProductManagment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'price'], 'required'],
+            [['name','category_id', 'price'], 'required'],
             [['category_id'], 'integer'],
             [['price'], 'number'],
             [['created_date', 'updated_date'], 'safe'],
@@ -47,7 +47,7 @@ class ProductManagment extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'category_id' => 'Category ID',
+            'category_id' => 'Category Name',
             'product_image' => 'Product Image',
             'price' => 'Price',
             'created_date' => 'Created Date',

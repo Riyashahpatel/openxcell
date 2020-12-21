@@ -66,7 +66,28 @@ class ProductmanagmentController extends Controller
     {
         $model = new ProductManagment();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+           // p($model,0);p($_FILES);
+            if (isset($_FILES['ProductManagment']['name']['product_image']) && $_FILES['ProductManagment']['name']['product_image'] != '') {
+                $uploadfile3 = \yii\web\UploadedFile::getInstances($model, 'product_image');
+               
+                //p($uploadfile3);
+
+                if (isset($uploadfile3)) {
+
+                    foreach ($uploadfile3 as $keys => $file) {
+                        $expload = explode(".", $file->name);
+                        $ext = end($expload);
+                        $img = "product" . Yii::$app->security->generateRandomString() . ".{$ext}";
+                        $original_file_path = UPLOAD_DIR_PATH  . $img;
+                        $upload_pic = $file->saveAs($original_file_path);
+                        $model->product_image = $img;
+                    }
+                }
+            }
+
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -85,8 +106,28 @@ class ProductmanagmentController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldimg = $model->product_image;
+        if ($model->load(Yii::$app->request->post()) ) {
+             if (isset($_FILES['ProductManagment']['name']['product_image']) && $_FILES['ProductManagment']['name']['product_image'] != '') {
+                $uploadfile3 = \yii\web\UploadedFile::getInstances($model, 'product_image');
+               
+                //p($uploadfile3);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                if (isset($uploadfile3)) {
+
+                    foreach ($uploadfile3 as $keys => $file) {
+                        $expload = explode(".", $file->name);
+                        $ext = end($expload);
+                        $img = "product" . Yii::$app->security->generateRandomString() . ".{$ext}";
+                        $original_file_path = UPLOAD_DIR_PATH  . $img;
+                        $upload_pic = $file->saveAs($original_file_path);
+                        $model->product_image = $img;
+                    }
+                }
+            }else{
+                $model->product_image = $oldimg;
+            }
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
