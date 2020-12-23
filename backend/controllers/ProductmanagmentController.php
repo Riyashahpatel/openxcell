@@ -28,6 +28,15 @@ class ProductmanagmentController extends Controller
             ],
         ];
     }
+     public function beforeAction($action) {
+        
+        if(isset(yii::$app->user->identity->id) && !empty(yii::$app->user->identity->id)){
+            return true;
+        }else{
+            return $this->redirect(['//site/login']);
+        }
+        
+    }
 
     /**
      * Lists all ProductManagment models.

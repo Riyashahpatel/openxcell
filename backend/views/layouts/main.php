@@ -30,14 +30,12 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandUrl' => '#',
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
+   
      $menuItems[] = ['label' => 'User Managment', 'url' => ['/usermanagment']];
     $menuItems[] = ['label' => 'Category Managments', 'url' => ['/categorymanagment']];
     $menuItems[] = ['label' => 'Product Managments', 'url' => ['/productmanagment']];

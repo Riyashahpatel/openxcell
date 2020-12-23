@@ -64,7 +64,16 @@ $this->params['breadcrumbs'][] = $this->title;
              ['class' => 'yii\grid\ActionColumn',
                 'header' => 'Actions',
                 'headerOptions' => ['style' => 'width: 12%'],
-                'template' => '{view}',
+                'template' => '{BuyNow}',
+                 'buttons' => [
+                                            
+                                    'BuyNow' => function ($url, $model) {
+                                                 $t =  yii::$app->request->baseUrl."/productlist/view?id=" . $model['id'];
+                                                return Html::a('<a class="btn btn-success" href="'.$t.'">Buy Now</a>', $t, ['title' => 'Buy Now']);
+                                            },
+                                                  
+                                                ],
+                                            
             ]
         ],
     ]); ?>

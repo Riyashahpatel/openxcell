@@ -127,11 +127,9 @@ class SiteController extends Controller
     if ($model->load(Yii::$app->request->post())) {
         $model->is_admin = 0;
         if($model->login()){
-          p('s');
+          
 
-                return $this->render('index', [
-                'model' => $model,
-            ]);
+                return $this->redirect(['productlist/index']);
         }else{
             // p('out');
             // Yii::$app->session->setFlash('error', 'Something went wrong!');
@@ -162,8 +160,10 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
-        return $this->goHome();
+        $model = new LoginForm();
+          return $this->render('login', [
+                'model' => $model,
+            ]);
     }
 
    

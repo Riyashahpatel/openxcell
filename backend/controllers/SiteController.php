@@ -82,9 +82,7 @@ class SiteController extends Controller
             $model->is_admin = 1;
             
             if($model->login()){
-                return $this->render('//usermanagment/index', [
-                'model' => $model,
-            ]);
+                return $this->redirect(['//usermanagment/index']);
             }else{
                 return $this->render('login', [
                 'model' => $model,

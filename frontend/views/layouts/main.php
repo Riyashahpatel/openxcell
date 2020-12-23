@@ -38,7 +38,8 @@ AppAsset::register($this);
    
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/frontlogin']];
+        $menuItems[] = ['label' => 'User Login', 'url' => ['/site/frontlogin']];
+        $menuItems[] = ['label' => 'Is Admin ?', 'url' => ['/backend/usermanagment']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

@@ -44,25 +44,99 @@ class ProductlistController extends Controller
         ]);
     }
 
-    public function actionBuynow($id){
-       // $product = ProductManagment::find()->where(['id'=>$id])->one();
+   
 
-     $dataProvider = new ActiveDataProvider([
-            'query' => ProductManagment::find()->orderby('id DESC'),
-        ]);     
-        $modelOrder = new OrderManagment();
-        $modelOrder->product_id = $id;
-        $modelOrder->user_id = yii::$app->user->identity->id;
-        if($modelOrder->save()){
-            return $this->render('index',['dataProvider' => $dataProvider,]);
-            }else{
-                p($modelOrder->getErrors());
-            } 
+
+    public function actionCheckout($id){
+
+
+        $procutMaster = ProductManagment::find()->where(['id'=>$id])->one();
+
+        // Setup order information array with all items
+        $params = [
+            'payer'=>["payment_method"=> "paypal"],
+            'method'=>'paypal',
+            'intent'=>'sale',
+            'order'=>[
+                'description'=>'Payment description',
+                'subtotal'=>$procutMaster->price,
+                'shippingCost'=>0,
+                'total'=>$procutMaster->price,
+                'currency'=>'INR',
+                'items'=>[
+                    [
+                        'name'=>$procutMaster->name,
+                        'price'=>$procutMaster->price,
+                        'quantity'=>1,
+                        'currency'=>'INR',
+
+                    ],
+                    
+                ]
+
+            ]
+        ];
         
+        $session = Yii::$app->session;
+        $session['procutMaster'] = $procutMaster;
 
+        Yii::$app->PayPalRestApi->checkOut($params);
+    }
 
+    public function actionBuyproduct(){
+
+        $session = Yii::$app->session;
+       
+         $dataProvider = new ActiveDataProvider([
+            'query' => ProductManagment::find()->orderby('id DESC'),
+        ]); 
+
+         if(isset($session['procutMaster']) && !empty($session['procutMaster'])){
+            $details = $session['procutMaster'];
+             $id= $details['id'];
+             $params = [
+            'order'=>[
+                'description'=>$details['name'],
+                'subtotal'=>$details['price'],
+                'shippingCost'=>0,
+                'total'=>$details['price'],
+                'currency'=>'INR',
+            ]
+        ];
+         }else{
+            $id= 1;
+            $details = $session['procutMaster'];
+             $params = [
+            
+            ];
+         }
+       
+     
+      $getdata =   Yii::$app->PayPalRestApi->processPayment($params);
+    
+      if(isset($_REQUEST['success']) && $_REQUEST['success'] == 'true'){
+
+           $modelOrder = new OrderManagment();
+            $modelOrder->product_id = $id;
+            $modelOrder->user_id = yii::$app->user->identity->id;
+            $modelOrder->paymentstatus = $_REQUEST['success'];
+            $modelOrder->paymentId = $_REQUEST['paymentId'];
+            $modelOrder->token = $_REQUEST['token'];
+            $modelOrder->PayerID = $_REQUEST['PayerID'];
+            if($modelOrder->save()){
+            Yii::$app->session->setFlash('success', 'Payment success.');
+                return $this->redirect(['index']);
+            }
+
+              return $this->render('index',['dataProvider' => $dataProvider,]);
+      }else{
+        Yii::$app->session->setFlash('error', 'Payment Fail.');
+        return $this->render('index',['dataProvider' => $dataProvider,]);
+      }
 
     }
+
+
     /**
      * Displays a single ProductManagment model.
      * @param integer $id

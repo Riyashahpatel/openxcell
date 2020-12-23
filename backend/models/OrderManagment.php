@@ -31,7 +31,7 @@ class OrderManagment extends \yii\db\ActiveRecord
         return [
             [['product_id', 'user_id', 'updated_date'], 'required'],
             [['product_id', 'user_id'], 'integer'],
-            [['created_date', 'updated_date'], 'safe'],
+            [['created_date', 'updated_date','paymentstatus','paymentId','token','PayerID'], 'safe'],
         ];
     }
 

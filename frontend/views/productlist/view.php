@@ -60,5 +60,5 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
 </div>
-<div><?= Html::a('Buy Now', ['/productlist/buynow?id='.$model->id.''], ['class'=>'btn btn-primary']) ?>
+<div><?= Html::a('Buy Now', ['/productlist/checkout?id='.$model->id.''], ['class'=>'btn btn-primary']) ?>
 </div>

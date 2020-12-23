@@ -36,6 +36,10 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+         'PayPalRestApi'=>[
+            'class'=>'bitcko\paypalrestapi\PayPalRestApi',
+            'redirectUrl'=>'/productlist/buyproduct', // Redirect Url after payment
+            ],
         'urlManager'=>[
         'enablePrettyUrl' => true,
             'showScriptName' => false,
